@@ -342,6 +342,16 @@ function controllerFromEvent(ev) {
   return controllers.find(c => c.obj === obj) || null;
 }
 
+function resolveAnswerCardGroup(mesh) {
+  if (!mesh || !answersGroup) return null;
+  let current = mesh;
+  while (current && current !== answersGroup) {
+    if (current.parent === answersGroup) return current;
+    current = current.parent;
+  }
+  return null;
+}
+
 /* -------------------- Controller Input -------------------- */
 function onSelectStart(ev) {
   // TTS-Entsperren bei User-Geste
@@ -373,7 +383,8 @@ function onSelectStart(ev) {
       if (now - ctrl.lastSelectTs >= INPUT.controller.selectDebounceMs) {
         ctrl.lastSelectTs = now;
         console.log("[Answer] Selected:", aHit.object?.userData?.label || aHit.object?.name);
-        evaluateAnswer(aHit.object, { via: "controller", controllerObj: ctrl.obj });
+        const cardGroup = resolveAnswerCardGroup(aHit.object);
+        evaluateAnswer(cardGroup || aHit.object, { via: "controller", controllerObj: ctrl.obj });
         return;
       }
     }
@@ -676,26 +687,15 @@ function relayoutLocal(tbounds) {
 }
 
 /* -------------------- Bewertung -------------------- */
-function findAnswerCardAncestor(node) {
-  let current = node;
-  while (current) {
-    if (current.userData && Object.prototype.hasOwnProperty.call(current.userData, "correct")) {
-      return current;
-    }
-    current = current.parent;
-  }
-  return null;
-}
-
 function evaluateAnswer(mesh, { via, controllerObj } = {}) {
   if (!acceptingAnswers) return;
 
-  const cardGroup = findAnswerCardAncestor(mesh);
+  const cardGroup = resolveAnswerCardGroup(mesh);
   if (!cardGroup) return;
 
   acceptingAnswers = false;
 
-  const ok = !!cardGroup.userData.correct;
+  const ok = !!cardGroup.userData?.correct;
   flashFeedback(cardGroup, ok, 380);
 
   const confettiPos = cardGroup.getWorldPosition(new THREE.Vector3()).add(new THREE.Vector3(0, 0.05, 0));
@@ -863,10 +863,8 @@ function intersectAnswersFromController(ctrlObj) {
 
   const hits = raycaster.intersectObjects(answersGroup.children, true);
   for (const hit of hits) {
-    const card = findAnswerCardAncestor(hit.object);
-    if (card && answersGroup.children.includes(card)) {
-      return { ...hit, object: card };
-    }
+    const cardGroup = resolveAnswerCardGroup(hit.object);
+    if (cardGroup) return { ...hit, object: cardGroup };
   }
   return null;
 }
@@ -983,10 +981,10 @@ function updateControllerPointersAndHover() {
       dotOpacity = 0.95;
 
       if (placingDone && acceptingAnswers && answersGroup) {
-        const card = findAnswerCardAncestor(h.object);
-        if (card && answersGroup.children.includes(card)) {
+        const cardGroup = resolveAnswerCardGroup(h.object);
+        if (cardGroup) {
           if (!hoverHit || h.distance < hoverHit.distance) {
-            hoverHit = { object: card, point: h.point, distance: h.distance };
+            hoverHit = { object: cardGroup, point: h.point, distance: h.distance };
           }
         }
       }
