@@ -71,6 +71,10 @@ export const CONFIG = {
       lift: 0.30,          // vorher 0.22 – jetzt höher
       frontOffsetZ: 0.04   // leicht vorziehen
     },
+    summary: {
+      lift: 0.50,
+      frontOffsetZ: 0.06
+    },
     // höhere Render-Ordnung für die Summary, damit sie sicher oben liegt
     zorder: {
       base: 10,
