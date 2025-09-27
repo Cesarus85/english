@@ -164,14 +164,14 @@ export function layoutQuestionAdaptive(tableLocalGroup, tbounds, imageCard, answ
   const H = tbounds.size.y;
   const y = 0.002; // knapp über der Platte (lokal)
 
-  // Prompt oben (entlang +Z)
+  // Prompt oben (entlang -Z in Tisch-Koordinaten, Richtung HUD)
   const pW = CONFIG.cards?.prompt?.w ?? 0.22;
   const pH = CONFIG.cards?.prompt?.h ?? 0.16;
 
   const margin = Math.max(0.03, Math.min(W,H) * 0.04);
 
   if (imageCard) {
-    imageCard.position.set(0, y, -(H/2 - margin - pH/2)); // oben (lokal -Z nach Flip)
+    imageCard.position.set(0, y, -(H/2 - margin - pH/2)); // oben (lokal -Z)
   }
 
   // Antworten unten als 2x2 Gitter
@@ -181,20 +181,18 @@ export function layoutQuestionAdaptive(tableLocalGroup, tbounds, imageCard, answ
     const gapX = Math.max(0.04, W * 0.08);
     const gapZ = Math.max(0.03, H * 0.06);
 
-    // Zwei Reihen unterhalb der Mitte
-    const rowZTopOriginal = 0 - (aH/2) - gapZ/2;
-    const rowZBottomOriginal = -(H/2) + margin + aH/2;
-    const rowZTop    = -rowZBottomOriginal;
-    const rowZBottom = -rowZTopOriginal;
+    // Zwei Reihen auf der spielerseitigen (positiven) Tischhälfte
+    const rowZNear =  (H/2) - margin - (aH/2);
+    const rowZFar  = rowZNear - (aH + gapZ);
 
     const colXLeft  = -(aW/2) - gapX/2;
     const colXRight = +(aW/2) + gapX/2;
 
     const slots = [
-      [colXLeft,  rowZTop],
-      [colXRight, rowZTop],
-      [colXLeft,  rowZBottom],
-      [colXRight, rowZBottom],
+      [colXLeft,  rowZFar],
+      [colXRight, rowZFar],
+      [colXLeft,  rowZNear],
+      [colXRight, rowZNear],
     ];
     answersGroup.children.forEach((card, i) => {
       const s = slots[i] || slots[slots.length-1];
