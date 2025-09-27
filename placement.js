@@ -58,7 +58,7 @@ export class TablePlacer {
     // --- Platte (Spielfeld)
     this.table = new THREE.Group();
     this.table.name = "TableRoot";
-    this.table.rotation.y = Math.PI;
+    this.table.rotation.y = 0; // start unrotated; final orientation applied after placement
     this.plate = this._makePlate(this.width, this.height);
     this.table.add(this.plate);
 
@@ -199,6 +199,8 @@ export class TablePlacer {
     // nach Platzierung Platte zeigen
     this.setVisible(true);
     this.enableHandles(true);
+    // apply default facing after placement so prompt/answers layout keep orientation
+    this.table.rotation.y = Math.PI;
     return this.getBounds();
   }
 
