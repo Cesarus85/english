@@ -171,7 +171,7 @@ export function layoutQuestionAdaptive(tableLocalGroup, tbounds, imageCard, answ
   const margin = Math.max(0.03, Math.min(W,H) * 0.04);
 
   if (imageCard) {
-    imageCard.position.set(0, y, (H/2 - margin - pH/2)); // oben (lokal +Z)
+    imageCard.position.set(0, y, -(H/2 - margin - pH/2)); // oben (lokal -Z nach Flip)
   }
 
   // Antworten unten als 2x2 Gitter
@@ -182,8 +182,10 @@ export function layoutQuestionAdaptive(tableLocalGroup, tbounds, imageCard, answ
     const gapZ = Math.max(0.03, H * 0.06);
 
     // Zwei Reihen unterhalb der Mitte
-    const rowZTop    = 0 - (aH/2) - gapZ/2;
-    const rowZBottom = -(H/2) + margin + aH/2;
+    const rowZTopOriginal = 0 - (aH/2) - gapZ/2;
+    const rowZBottomOriginal = -(H/2) + margin + aH/2;
+    const rowZTop    = -rowZBottomOriginal;
+    const rowZBottom = -rowZTopOriginal;
 
     const colXLeft  = -(aW/2) - gapX/2;
     const colXRight = +(aW/2) + gapX/2;
