@@ -1,0 +1,68 @@
+{
+  "topics": ["School", "Animals", "Food", "Family", "Home", "Clothes", "Sports", "Weather", "Colors", "Body"],
+  "entries": [
+    { "en": "pencil", "de": "Bleistift", "topic": "School", "level": "A1", "hint": "✏" },
+    { "en": "pen", "de": "Kugelschreiber", "topic": "School", "level": "A1", "hint": "🖊" },
+    { "en": "rubber", "de": "Radiergummi", "topic": "School", "level": "A1", "hint": "🧽" },
+    { "en": "ruler", "de": "Lineal", "topic": "School", "level": "A1", "hint": "📏" },
+    { "en": "book", "de": "Buch", "topic": "School", "level": "A1", "hint": "📘" },
+    { "en": "schoolbag", "de": "Schultasche", "topic": "School", "level": "A1", "hint": "🎒" },
+    { "en": "teacher", "de": "Lehrer", "topic": "School", "level": "A1", "hint": "🏫" },
+    { "en": "desk", "de": "Schreibtisch", "topic": "School", "level": "A1", "hint": "💻" },
+
+    { "en": "dog", "de": "Hund", "topic": "Animals", "level": "A1", "hint": "🐶" },
+    { "en": "cat", "de": "Katze", "topic": "Animals", "level": "A1", "hint": "🐱" },
+    { "en": "bird", "de": "Vogel", "topic": "Animals", "level": "A1", "hint": "🐦" },
+    { "en": "fish", "de": "Fisch", "topic": "Animals", "level": "A1", "hint": "🐟" },
+    { "en": "horse", "de": "Pferd", "topic": "Animals", "level": "A1", "hint": "🐴" },
+    { "en": "mouse", "de": "Maus", "topic": "Animals", "level": "A1", "hint": "🐭" },
+    { "en": "elephant", "de": "Elefant", "topic": "Animals", "level": "A1", "hint": "🐘" },
+    { "en": "lion", "de": "Löwe", "topic": "Animals", "level": "A1", "hint": "🦁" },
+
+    { "en": "apple", "de": "Apfel", "topic": "Food", "level": "A1", "hint": "🍎" },
+    { "en": "banana", "de": "Banane", "topic": "Food", "level": "A1", "hint": "🍌" },
+    { "en": "bread", "de": "Brot", "topic": "Food", "level": "A1", "hint": "🍞" },
+    { "en": "water", "de": "Wasser", "topic": "Food", "level": "A1", "hint": "💧" },
+    { "en": "milk", "de": "Milch", "topic": "Food", "level": "A1", "hint": "🥛" },
+    { "en": "cheese", "de": "Käse", "topic": "Food", "level": "A1", "hint": "🧀" },
+    { "en": "egg", "de": "Ei", "topic": "Food", "level": "A1", "hint": "🥚" },
+    { "en": "carrot", "de": "Karotte", "topic": "Food", "level": "A1", "hint": "🥕" },
+
+    { "en": "mother", "de": "Mutter", "topic": "Family", "level": "A1", "hint": "👩" },
+    { "en": "father", "de": "Vater", "topic": "Family", "level": "A1", "hint": "👨" },
+    { "en": "sister", "de": "Schwester", "topic": "Family", "level": "A1", "hint": "👧" },
+    { "en": "brother", "de": "Bruder", "topic": "Family", "level": "A1", "hint": "👦" },
+    { "en": "grandmother", "de": "Großmutter", "topic": "Family", "level": "A1", "hint": "👵" },
+    { "en": "grandfather", "de": "Großvater", "topic": "Family", "level": "A1", "hint": "👴" },
+
+    { "en": "house", "de": "Haus", "topic": "Home", "level": "A1", "hint": "🏠" },
+    { "en": "kitchen", "de": "Küche", "topic": "Home", "level": "A1", "hint": "🍽" },
+    { "en": "bedroom", "de": "Schlafzimmer", "topic": "Home", "level": "A1", "hint": "🛏" },
+    { "en": "door", "de": "Tür", "topic": "Home", "level": "A1", "hint": "🚪" },
+    { "en": "window", "de": "Fenster", "topic": "Home", "level": "A1", "hint": "🪟" },
+
+    { "en": "shirt", "de": "Hemd", "topic": "Clothes", "level": "A1", "hint": "👔" },
+    { "en": "shoes", "de": "Schuhe", "topic": "Clothes", "level": "A1", "hint": "👟" },
+    { "en": "jacket", "de": "Jacke", "topic": "Clothes", "level": "A1", "hint": "🧥" },
+    { "en": "skirt", "de": "Rock", "topic": "Clothes", "level": "A1", "hint": "👗" },
+
+    { "en": "football", "de": "Fußball", "topic": "Sports", "level": "A1", "hint": "⚽" },
+    { "en": "tennis", "de": "Tennis", "topic": "Sports", "level": "A1", "hint": "🎾" },
+    { "en": "basketball", "de": "Basketball", "topic": "Sports", "level": "A1", "hint": "🏀" },
+
+    { "en": "sunny", "de": "sonnig", "topic": "Weather", "level": "A1", "hint": "☀" },
+    { "en": "rainy", "de": "regnerisch", "topic": "Weather", "level": "A1", "hint": "🌧" },
+    { "en": "cloudy", "de": "wolkig", "topic": "Weather", "level": "A1", "hint": "☁" },
+    { "en": "snow", "de": "Schnee", "topic": "Weather", "level": "A1", "hint": "❄" },
+
+    { "en": "red", "de": "rot", "topic": "Colors", "level": "A1", "hint": "🟥" },
+    { "en": "blue", "de": "blau", "topic": "Colors", "level": "A1", "hint": "🟦" },
+    { "en": "green", "de": "grün", "topic": "Colors", "level": "A1", "hint": "🟩" },
+    { "en": "yellow", "de": "gelb", "topic": "Colors", "level": "A1", "hint": "🟨" },
+
+    { "en": "head", "de": "Kopf", "topic": "Body", "level": "A1", "hint": "🙂" },
+    { "en": "hand", "de": "Hand", "topic": "Body", "level": "A1", "hint": "🤚" },
+    { "en": "foot", "de": "Fuß", "topic": "Body", "level": "A1", "hint": "🦶" },
+    { "en": "eye", "de": "Auge", "topic": "Body", "level": "A1", "hint": "👁" }
+  ]
+}

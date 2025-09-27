@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AR Vokabel-Quiz — Schritt 1</title>
+  <style>
+    html, body { margin:0; padding:0; height:100%; background:#000; color:#eee; font-family:system-ui, sans-serif; }
+    #enter-ar-hint { position:fixed; left:50%; transform:translateX(-50%); bottom:16px; opacity:.85; font-size:14px; }
+    .overlay {
+      position: fixed; top: 12px; left: 12px; right: 12px;
+      display:flex; justify-content:space-between; align-items:center; pointer-events:none;
+      font-size:14px; color:#cfd8dc;
+    }
+    .badge { background:#263238aa; padding:6px 10px; border-radius:10px; }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <div class="badge">Schritt 1 • Platzieren: Trigger gedrückt halten → ziehen → loslassen</div>
+    <div id="enter-ar-hint" class="badge">Tippe „Enter AR“ in der Browser-UI (Quest)</div>
+  </div>
+
+  <script type="module" src="./config.js"></script>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
