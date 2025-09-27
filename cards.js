@@ -163,16 +163,17 @@ export function layoutQuestionAdaptive(tableLocalGroup, tbounds, imageCard, answ
   const W = tbounds.size.x;
   const H = tbounds.size.y;
   const y = 0.002; // knapp über der Platte (lokal)
-  const flatCardRotation = new THREE.Euler(-Math.PI / 2, Math.PI, 0);
+  const flatCardRotation = new THREE.Euler(-Math.PI / 2, 0, 0);
 
-  // Prompt oben (entlang -Z in Tisch-Koordinaten, Richtung HUD)
+  // Prompt oben (entlang +Z in Tisch-Koordinaten, Richtung HUD)
   const pW = CONFIG.cards?.prompt?.w ?? 0.22;
   const pH = CONFIG.cards?.prompt?.h ?? 0.16;
 
   const margin = Math.max(0.03, Math.min(W,H) * 0.04);
 
   if (imageCard) {
-    imageCard.position.set(0, y, -(H/2 - margin - pH/2)); // oben (lokal -Z)
+    const qZ = (H/2) - margin - (pH/2);
+    imageCard.position.set(0, y, qZ); // oben Richtung HUD (lokal +Z)
   }
 
   // Antworten unten als 2x2 Gitter
@@ -181,19 +182,19 @@ export function layoutQuestionAdaptive(tableLocalGroup, tbounds, imageCard, answ
     const aH = CONFIG.cards?.answer?.h ?? 0.11;
     const gapX = Math.max(0.04, W * 0.08);
     const gapZ = Math.max(0.03, H * 0.06);
+    const gapPrompt = Math.max(0.02, H * 0.035);
 
-    // Zwei Reihen auf der spielerseitigen (positiven) Tischhälfte
-    const rowZNear =  (H/2) - margin - (aH/2);
-    const rowZFar  = rowZNear - (aH + gapZ);
+    const topRowZ = ((H/2) - margin - (pH/2)) - gapPrompt - (aH/2);
+    const bottomRowZ = topRowZ - (aH + gapZ);
 
     const colXLeft  = -(aW/2) - gapX/2;
     const colXRight = +(aW/2) + gapX/2;
 
     const slots = [
-      [colXLeft,  rowZFar],
-      [colXRight, rowZFar],
-      [colXLeft,  rowZNear],
-      [colXRight, rowZNear],
+      [colXLeft,  topRowZ],
+      [colXRight, topRowZ],
+      [colXLeft,  bottomRowZ],
+      [colXRight, bottomRowZ],
     ];
     answersGroup.children.forEach((card, i) => {
       const s = slots[i] || slots[slots.length-1];
