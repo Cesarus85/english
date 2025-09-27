@@ -7,7 +7,14 @@ function makeCardMesh(w=0.16, h=0.10, text="", bg=0x243b2f) {
 
   const plane = new THREE.Mesh(
     new THREE.PlaneGeometry(w, h),
-    new THREE.MeshBasicMaterial({ color: bg, transparent:true, opacity:1.0, depthTest:false, depthWrite:false })
+    new THREE.MeshBasicMaterial({
+      color: bg,
+      transparent: true,
+      opacity: 1.0,
+      depthTest: false,
+      depthWrite: false,
+      side: THREE.DoubleSide,
+    })
   );
   plane.name = "cardPlane";
 
@@ -36,7 +43,13 @@ function makeCardMesh(w=0.16, h=0.10, text="", bg=0x243b2f) {
 
   const txt = new THREE.Mesh(
     new THREE.PlaneGeometry(w*0.98, h*0.98),
-    new THREE.MeshBasicMaterial({ map: tex, transparent:true, depthTest:false, depthWrite:false })
+    new THREE.MeshBasicMaterial({
+      map: tex,
+      transparent: true,
+      depthTest: false,
+      depthWrite: false,
+      side: THREE.DoubleSide,
+    })
   );
   txt.position.set(0, 0, 0.001);
 
@@ -88,7 +101,13 @@ function makeHintMesh(w=0.18, h=0.14, hint="", de="") {
 
   const plane = new THREE.Mesh(
     new THREE.PlaneGeometry(w, h),
-    new THREE.MeshBasicMaterial({ map: tex, transparent:true, depthTest:false, depthWrite:false })
+    new THREE.MeshBasicMaterial({
+      map: tex,
+      transparent: true,
+      depthTest: false,
+      depthWrite: false,
+      side: THREE.DoubleSide,
+    })
   );
 
   group.add(plane);
