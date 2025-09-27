@@ -690,13 +690,15 @@ function findAnswerCardAncestor(node) {
 function evaluateAnswer(mesh, { via, controllerObj } = {}) {
   if (!acceptingAnswers) return;
 
-  const card = findAnswerCardAncestor(mesh);
-  if (!card) return;
+  const cardGroup = findAnswerCardAncestor(mesh);
+  if (!cardGroup) return;
 
   acceptingAnswers = false;
 
-  const ok = !!card.userData.correct;
-  flashFeedback(card, ok, 380);
+  const ok = !!cardGroup.userData.correct;
+  flashFeedback(cardGroup, ok, 380);
+
+  const confettiPos = cardGroup.getWorldPosition(new THREE.Vector3()).add(new THREE.Vector3(0, 0.05, 0));
 
   if (ok) {
     const mult = 1 + gameState.streak * CONFIG.scoring.streakBonus;
@@ -707,7 +709,7 @@ function evaluateAnswer(mesh, { via, controllerObj } = {}) {
     gameState.correctCount += 1;
     playCorrect();
     if (via === "controller" && controllerObj) hapticOk(controllerObj);
-    confetti(scene, card.getWorldPosition(new THREE.Vector3()).add(new THREE.Vector3(0, 0.05, 0)), true);
+    confetti(scene, confettiPos, true);
 
     const en = currentQ?.prompt?.en || "";
     speak(en);
@@ -715,7 +717,7 @@ function evaluateAnswer(mesh, { via, controllerObj } = {}) {
     gameState.streak = 0;
     playWrong();
     if (via === "controller" && controllerObj) hapticBad(controllerObj);
-    confetti(scene, card.getWorldPosition(new THREE.Vector3()).add(new THREE.Vector3(0, 0.05, 0)), false);
+    confetti(scene, confettiPos, false);
   }
 
   const topic = currentQ?.prompt?.topic || gameState.selectedTopic || "All";
@@ -854,7 +856,19 @@ function intersectUIFromController(ctrlObj) {
 }
 function intersectAnswersFromController(ctrlObj) {
   if (!answersGroup || !ctrlObj) return null;
-  return intersectObjectsFromController(ctrlObj, answersGroup.children);
+  const m = ctrlObj.matrixWorld;
+  const origin = new THREE.Vector3().setFromMatrixPosition(m);
+  const dir = new THREE.Vector3(0, 0, -1).applyMatrix4(new THREE.Matrix4().extractRotation(m));
+  raycaster.set(origin, dir);
+
+  const hits = raycaster.intersectObjects(answersGroup.children, true);
+  for (const hit of hits) {
+    const card = findAnswerCardAncestor(hit.object);
+    if (card && answersGroup.children.includes(card)) {
+      return { ...hit, object: card };
+    }
+  }
+  return null;
 }
 function intersectResizeFromController(ctrlObj) {
   const g = tablePlacer?.handleGroup;
