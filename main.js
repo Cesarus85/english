@@ -627,6 +627,12 @@ function startQuestionRound(tbounds) {
   answersGroup = makeAnswerCards(currentQ.options.map(o => o.en));
   imageCard = makeImageCard({ hint: currentQ.prompt.hint, de: currentQ.prompt.de });
 
+  const table = tablePlacer?.table;
+  if (table) {
+    if (imageCard && !imageCard.parent) table.add(imageCard);
+    if (answersGroup && !answersGroup.parent) table.add(answersGroup);
+  }
+
   answersGroup.children.forEach((card, idx) => {
     card.userData.correct = (idx === currentQ.correctIndex);
   });
@@ -653,7 +659,12 @@ function startQuestionRound(tbounds) {
 }
 
 function relayoutLocal(tbounds) {
-  layoutQuestionAdaptive(tablePlacer.table, tbounds, imageCard, answersGroup);
+  const table = tablePlacer?.table;
+  if (table) {
+    if (imageCard && !imageCard.parent) table.add(imageCard);
+    if (answersGroup && !answersGroup.parent) table.add(answersGroup);
+  }
+  layoutQuestionAdaptive(table, tbounds, imageCard, answersGroup);
   hud.updateControls({
     topic: gameState.selectedTopic || "All",
     roundSize: gameState.roundSize,
