@@ -58,6 +58,7 @@ export class TablePlacer {
     // --- Platte (Spielfeld)
     this.table = new THREE.Group();
     this.table.name = "TableRoot";
+    this.table.rotation.y = Math.PI;
     this.plate = this._makePlate(this.width, this.height);
     this.table.add(this.plate);
 
