@@ -676,12 +676,27 @@ function relayoutLocal(tbounds) {
 }
 
 /* -------------------- Bewertung -------------------- */
+function findAnswerCardAncestor(node) {
+  let current = node;
+  while (current) {
+    if (current.userData && Object.prototype.hasOwnProperty.call(current.userData, "correct")) {
+      return current;
+    }
+    current = current.parent;
+  }
+  return null;
+}
+
 function evaluateAnswer(mesh, { via, controllerObj } = {}) {
   if (!acceptingAnswers) return;
+
+  const card = findAnswerCardAncestor(mesh);
+  if (!card) return;
+
   acceptingAnswers = false;
 
-  const ok = !!mesh.userData.correct;
-  flashFeedback(mesh, ok, 380);
+  const ok = !!card.userData.correct;
+  flashFeedback(card, ok, 380);
 
   if (ok) {
     const mult = 1 + gameState.streak * CONFIG.scoring.streakBonus;
@@ -692,7 +707,7 @@ function evaluateAnswer(mesh, { via, controllerObj } = {}) {
     gameState.correctCount += 1;
     playCorrect();
     if (via === "controller" && controllerObj) hapticOk(controllerObj);
-    confetti(scene, mesh.getWorldPosition(new THREE.Vector3()).add(new THREE.Vector3(0, 0.05, 0)), true);
+    confetti(scene, card.getWorldPosition(new THREE.Vector3()).add(new THREE.Vector3(0, 0.05, 0)), true);
 
     const en = currentQ?.prompt?.en || "";
     speak(en);
@@ -700,7 +715,7 @@ function evaluateAnswer(mesh, { via, controllerObj } = {}) {
     gameState.streak = 0;
     playWrong();
     if (via === "controller" && controllerObj) hapticBad(controllerObj);
-    confetti(scene, mesh.getWorldPosition(new THREE.Vector3()).add(new THREE.Vector3(0, 0.05, 0)), false);
+    confetti(scene, card.getWorldPosition(new THREE.Vector3()).add(new THREE.Vector3(0, 0.05, 0)), false);
   }
 
   const topic = currentQ?.prompt?.topic || gameState.selectedTopic || "All";
@@ -953,8 +968,13 @@ function updateControllerPointersAndHover() {
       lineOpacity = 0.95;
       dotOpacity = 0.95;
 
-      if (placingDone && acceptingAnswers && answersGroup && answersGroup.children.includes(h.object)) {
-        if (!hoverHit || h.distance < hoverHit.distance) hoverHit = h;
+      if (placingDone && acceptingAnswers && answersGroup) {
+        const card = findAnswerCardAncestor(h.object);
+        if (card && answersGroup.children.includes(card)) {
+          if (!hoverHit || h.distance < hoverHit.distance) {
+            hoverHit = { object: card, point: h.point, distance: h.distance };
+          }
+        }
       }
     } else {
       const hits2 = extraTargets.length ? raycaster.intersectObjects(extraTargets, true) : [];
