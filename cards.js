@@ -199,11 +199,11 @@ export function layoutQuestionAdaptive(tableLocalGroup, tbounds, imageCard, answ
     answersGroup.children.forEach((card, i) => {
       const s = slots[i] || slots[slots.length-1];
       card.position.set(s[0], y, s[1]);
-      card.rotation.set(0, 0, 0); // flach
+      card.rotation.set(-Math.PI / 2, Math.PI, 0); // liegend, Text zu Spieler*in
     });
   }
 
   // Sicherstellen, dass alles exakt auf dem Tisch liegt (lokal Y)
-  if (imageCard) imageCard.rotation.set(0,0,0);
+  if (imageCard) imageCard.rotation.set(-Math.PI / 2, Math.PI, 0);
   if (answersGroup) answersGroup.rotation.set(0,0,0);
 }
